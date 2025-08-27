@@ -1,0 +1,74 @@
+import java.util.*;
+
+public class RandomPasswordGenerator {
+    public static String generatePassword(int length, boolean useUpper, boolean useLower,
+                                          boolean useDigits, boolean useSpecial) {
+        String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lower = "abcdefghijklmnopqrstuvwxyz";
+        String digits = "0123456789";
+        String special = "!@#$%^&*()-_=+[]{};:,.<>?/|";
+
+        List<Character> passwordChars = new ArrayList<>();
+        StringBuilder allChars = new StringBuilder();
+        Random random = new Random();
+
+        if (useUpper) {
+            allChars.append(upper);
+            passwordChars.add(upper.charAt(random.nextInt(upper.length())));
+        }
+        if (useLower) {
+            allChars.append(lower);
+            passwordChars.add(lower.charAt(random.nextInt(lower.length())));
+        }
+        if (useDigits) {
+            allChars.append(digits);
+            passwordChars.add(digits.charAt(random.nextInt(digits.length())));
+        }
+        if (useSpecial) {
+            allChars.append(special);
+            passwordChars.add(special.charAt(random.nextInt(special.length())));
+        }
+
+        if (allChars.length() == 0) {
+            return "Error: No character types selected!";
+        }
+
+        while (passwordChars.size() < length) {
+            passwordChars.add(allChars.charAt(random.nextInt(allChars.length())));
+        }
+
+        Collections.shuffle(passwordChars);
+        StringBuilder password = new StringBuilder();
+        for (char c : passwordChars) {
+            password.append(c);
+        }
+        return password.toString();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter password length: ");
+        int length = sc.nextInt();
+
+        System.out.print("Include UPPERCASE letters? (y/n): ");
+        boolean useUpper = sc.next().equalsIgnoreCase("y");
+
+        System.out.print("Include lowercase letters? (y/n): ");
+        boolean useLower = sc.next().equalsIgnoreCase("y");
+
+        System.out.print("Include numbers? (y/n): ");
+        boolean useDigits = sc.next().equalsIgnoreCase("y");
+
+        System.out.print("Include special characters? (y/n): ");
+        boolean useSpecial = sc.next().equalsIgnoreCase("y");
+
+        int minLength = (useUpper ? 1 : 0) + (useLower ? 1 : 0) + (useDigits ? 1 : 0) + (useSpecial ? 1 : 0);
+        if (length < minLength) {
+            System.out.println("Error: Password length must be at least " + minLength);
+        } else {
+            String password = generatePassword(length, useUpper, useLower, useDigits, useSpecial);
+            System.out.println("Your Secure Password: " + password);
+        }
+        sc.close();
+    }
+}
