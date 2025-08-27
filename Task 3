@@ -47,19 +47,19 @@ public class RandomPasswordGenerator {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter password length: ");
+        System.out.print("Enter the password length please: ");
         int length = sc.nextInt();
 
-        System.out.print("Include UPPERCASE letters? (y/n): ");
+        System.out.print("shall i use UPPERCASE letters? (y/n): ");
         boolean useUpper = sc.next().equalsIgnoreCase("y");
 
-        System.out.print("Include lowercase letters? (y/n): ");
+        System.out.print("shall i use lowercase letters? (y/n): ");
         boolean useLower = sc.next().equalsIgnoreCase("y");
 
-        System.out.print("Include numbers? (y/n): ");
+        System.out.print("can i include numbers also? (y/n): ");
         boolean useDigits = sc.next().equalsIgnoreCase("y");
 
-        System.out.print("Include special characters? (y/n): ");
+        System.out.print("can i include special characters? (y/n): ");
         boolean useSpecial = sc.next().equalsIgnoreCase("y");
 
         int minLength = (useUpper ? 1 : 0) + (useLower ? 1 : 0) + (useDigits ? 1 : 0) + (useSpecial ? 1 : 0);
@@ -67,7 +67,7 @@ public class RandomPasswordGenerator {
             System.out.println("Error: Password length must be at least " + minLength);
         } else {
             String password = generatePassword(length, useUpper, useLower, useDigits, useSpecial);
-            System.out.println("Your Secure Password: " + password);
+            System.out.println("your password is: " + password);
         }
         sc.close();
     }
